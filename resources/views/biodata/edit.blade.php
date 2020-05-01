@@ -1,6 +1,7 @@
-@extends("layout")
+@extends("layout.app")
 
 @section("content")
+
 
     @if($errors->any())
         <div class="alert alert-danger alert-dismissable">
@@ -13,12 +14,16 @@
         </div>
     @endif
 
+
     <form action="{{ route('biodata.update', ['biodatum' => $data->id]) }}" method="POST" class="form-horizontal">
         
         @csrf
 
         @method("PUT")
-        
+        <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
         <div class="form-group">
             <label class="control-label">Nama</label>
             <input type="text" class="form-control" name="name" value="{{ $data->name }}">
@@ -38,4 +43,8 @@
             </a>
         </div>
     </form>
+       </div>
+            </div>
+        </div>
+    </section>
 @endsection

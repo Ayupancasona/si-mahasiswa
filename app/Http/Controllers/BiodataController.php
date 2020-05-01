@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateBiodata;
 use App\BiodataMahasiswa;
 use App\Http\Controllers\Controller;
 use Datatables;
 use Yajra\DataTables\Html\Builder;
+
 class BiodataController extends Controller
 {
     /**
@@ -77,18 +80,21 @@ class BiodataController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+       public function store(Request $request)
     {
-     
-            $filePath = $request->file("foto")->store("public");
-            BiodataMahasiswa::create([
+        $filePath = $request->file("photo")->store("photo-mhs");
+        
+
+
+        BiodataMahasiswa::create([
             'name' => $request->name,
             'nim' => $request->nim,
-            'address' =>$request->address,
-            'foto' => $filePath]);
-            return redirect()->route("biodata.index");
-    }
+            'address' => $request->address,
+            'foto' => $filePath
+            ]); //menyimpan filePath yang didapatkan 
 
+        return redirect()->route("biodata.index");
+    }
     /**
      * Display the specified resource.
      *
@@ -127,7 +133,7 @@ class BiodataController extends Controller
     {
         //
         $validation = Validator::make($request->all(), [
-            "name" => "string|min:3|max::10|alpha",
+            "name" => "string|min:3|alpha",
             "nim" => "string|min:8",
             "alamat" => "string|min:10",
         ]);
